@@ -70,8 +70,7 @@
           <img src="./images/button-appstore.png" alt>
         </a>
         <a href="https://my.super9999.com/customer/contactus?type=byEmail" target="_blank">
-          <!-- <span>{{ $t('service') }}</span> -->
-          <img src="./images/button-support_EN.png" alt>
+          <img :src='`./images/button-support__${$i18n.locale}.png`' />
         </a>
         <a href="https://business.facebook.com/JinJinJinCasino" target="_blank">
           <img src="./images/button-fb.png" alt>
@@ -81,7 +80,6 @@
       <div class="cash-btn">
         <div class="apk">
           <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
-            <!-- <img src="./images/button-Download_CHS.png" /> -->
             <img :src='`./images/button-Download__${$i18n.locale}.png`' />
           </a>
         </div>
