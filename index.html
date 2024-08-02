@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3.2.31/dist/vue.global.prod.js"></script> -->
+  <!-- <script src="https://unpkg.com/vue-i18n@9.2.2/dist/vue-i18n.global.prod.js"></script> -->
+  <script src="js/vue.global.prod.js"></script>
+  <script src="js/vue-i18n.global.prod.js"></script>
+  <script src="js/crypto.min.js"></script>
+  <script src="js/sha.js"></script>
+  <script src="js/axios.min.js"></script>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+
+<body>
+  <div id="app" class="wrap">
+    <section class="footer-wrap">
+      <div class="download-info">
+        <div class="icon">
+          <img src="./images/panther-icon.png" alt>
+        </div>
+        <div class="name">JinJinJin</div>
+        <a class="download-btn" href="">
+          <div>DOWNLOAD</div>
+        </a>
+      </div>
+    </section>
+    <section class="lang-container">
+      <div class="lang-selector">
+        <ul class="lang-list">
+          <li v-for="(list, index) in langList" :key="index" @click="changeLanguage(list.params)" :class="{active: list.params === currentLanguage}">
+            {{ list.lang }}
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- <section class="cash-block">
+      <div class="app-info">
+        <div class="icon">
+          <img src="./images/panther-icon.png" alt>
+        </div>
+        <div class="title-txt">
+          <div class="app-name">JinJinJin</div>
+          <a href="" class="company-name">ARC PLAY LTD CO</a>
+        </div>
+      </div>
+    </section> -->
+    <section class="cash-block">
+      <div class="app-info logo">
+        <a href="" class="icon">
+          <img src="./images/login-logo.png" alt>
+        </a>
+        <div class="title-txt">
+          <a href="" class="company-name">ARC PLAY LTD CO.</a>
+        </div>
+      </div>
+    </section>
+    <section class="social-wrap">
+      <div class="social">
+        <a href="https://apps.apple.com/my/app/jinjinjincasino/id1457540360" target="_blank">
+          <img src="./images/button-appstore.png" alt>
+        </a>
+        <a href="https://my.super9999.com/customer/contactus?type=byEmail" target="_blank">
+          <!-- <span>{{ $t('service') }}</span> -->
+          <img src="./images/button-support_EN.png" alt>
+        </a>
+        <a href="https://business.facebook.com/JinJinJinCasino" target="_blank">
+          <img src="./images/button-fb.png" alt>
+        </a>
+    </section>
+    <section class="cash-block">
+      <div class="cash-btn">
+        <div class="apk">
+          <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
+            <!-- <img src="./images/button-Download_CHS.png" /> -->
+            <img :src='`./images/button-Download__${$i18n.locale}.png`' />
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="swiper-wrap">
+      <div class="swiper-txt">{{ $t('howToDownload') }}</div>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div v-for="(pic, i) in 5" class="swiper-slide">
+            <img :src="`images/tutorial-${$i18n.locale}-P${i + 1}.jpg`" alt="">
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </section>
+    <section class="rank-wrap">
+      <select v-if="rankData.length>0" v-model="currentId" @change="rankChange" class="rank-select">
+        <option v-for="(data, index) in rankData" :key="index" :value="data.rank_id">{{ data.ranking_name }}</option>
+      </select>
+      <div v-show="data.rank_id === currentId" v-for="(data, index) in computedRankInfo" :key="index">
+        <div class="rank-headline">
+          <div class="time">{{ $t('rank.time') }}：{{ data.start_time }} ~ {{ data.end_time }}</div>
+          <div class="room">{{ $t('rank.gameHall') }}：
+            <span> {{ data.games.join('、') }} </span>
+          </div>
+        </div>
+
+        <div v-if="rankList.length > 0" class="rank-info">{{ $t('rank.leaderboard') }} 5{{ $t('rank.updateOnceEveryMinuteUseCtrlFToSearchForPlayerNickname') }}</div>
+
+        <div v-if="rankList.length <= 0" class="data-empty">- {{ $t('noData') }} -</div>
+        <ul v-else class="rank-data">
+          <li>
+            <div>{{ $t('rank.ranking') }}</div>
+            <div>{{ $t('rank.playerNickname') }}</div>
+            <div>{{ $t('rank.activityScore') }}</div>
+          </li>
+          <li :class="{'fadeIn':fadeIn,'no1':index == 0,'no2':index == 1,'no3':index == 2}" v-for="(list ,index) in computedRankList" :key="index">
+            <div v-if="index == 0 || index == 1 || index == 2">
+              <img :src="`./images/icon-medal0${index + 1}.png`" alt="">
+            </div>
+            <div v-else>{{ list.rank }}</div>
+            <div>{{ list.nickname }}</div>
+            <div>{{ list.score }}</div>
+          </li>
+        </ul>
+      </div>
+      <div v-if="rankData.length <= 0" class="data-empty">- {{ $t('noData') }} -</div>
+    </section>
+  </div>
+
+  <script type="module">
+    import arkClient from './js/client.js';
+    import messages from './js/i18n.js';
+    import { FormatDate, thousandComma } from './js/tools.js';
+
+    const { createApp } = Vue;
+    const { createI18n } = window.VueI18n;
+
+    const i18n = createI18n({
+      legacy: false,
+      locale: 'en',
+      messages
+    });
+
+    const app = createApp({
+      data() {
+        return {
+          host: 'https://tapirus-alt.jinjinjin777.com',
+          port: '443',
+          ArkKey: '',
+          langList: [
+            { params: 'zh_Hans', lang: '简中' },
+            { params: 'en', lang: 'English' }
+          ],
+          rankData: [],
+          rankList: [],
+          currentId: '',
+          fadeIn: false,
+          swiper: null
+        }
+      },
+      computed: {
+        currentLanguage() {
+          return this.$i18n.locale;
+        },
+        computedRankInfo() {
+          let data = this.rankData.map((item, index) => {
+            item.start_time = FormatDate(item.start_time, 'ymdhm')
+            item.end_time = FormatDate(item.end_time, 'ymdhm')
+            return item
+          })
+          return data
+        },
+        computedRankList() {
+          let data = this.rankList.map((item, index) => {
+            item.score = thousandComma(item.score)
+            return item
+          })
+          return data
+        }
+      },
+      watch: {
+        currentLanguage() {
+          this.getRankInfo()
+        }
+      },
+      mounted() {
+        this.getRankInfo()
+        this.initSwiper()
+      },
+      methods: {
+        async getRankInfo() {
+          let data = {
+            cmd_id: 'ranking',
+            cmd_name: 'GET_EVENT_RANKING_LIST',
+            cmd_data: {
+              lang: this.$i18n.locale
+            }
+          }
+          try {
+            let response = await arkClient.SendDirect(data)
+            console.log('getRank: ', response)
+            if (response.code === 0) {
+              let respData = response.msg
+              if (respData.status.id === 0) {
+                this.rankData = respData.data.event
+                if (respData.data.event.length > 0) {
+                  this.currentId = respData.data.event[0].rank_id
+                  this.getRankList()
+                }
+              }
+            } else {
+              console.log('getRankInfo error: ', response)
+            }
+          } catch (error) {
+            console.log('getRankInfo error: ', error)
+          }
+        },
+        async getRankList() {
+            let cmd = {
+              cmd_id: 'ranking',
+              cmd_name: 'GET_GLOBAL_RANK',
+              cmd_data: {
+                ranking_id: this.currentId
+              }
+            }
+            let response = await arkClient.SendDirect(cmd)
+            console.log('getRankList: ', response)
+            if (response.code === 0) {
+              let respData = response.msg
+              if (respData.status.id === 0) {
+                this.rankList = respData.data.rank_list
+                await (this.fadeIn = true)
+              } else {
+                console.log('getRankList error: ', respData.status.msg)
+              }
+            } else {
+              console.log('getRankList error: ', response)
+            }
+        },
+        arkClient,
+        initSwiper() {
+          this.swiper = new Swiper('.swiper', {
+            speed: 400,
+            spaceBetween: 30,
+            slidesPerView: 'auto',
+            direction: 'horizontal',
+            grabCursor: true,
+            keyboard: true,
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          })
+        },
+        async rankChange() {
+          this.getRankList()
+          this.fadeIn = false
+        },
+        changeLanguage(lang) {
+          this.$i18n.locale = lang
+        }
+      }
+    });
+
+    app.use(i18n);
+    app.mount('#app');
+  </script>
+</body>
+</html>

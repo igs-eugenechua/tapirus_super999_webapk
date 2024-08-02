@@ -1,0 +1,169 @@
+/* -----------------
+- rank -
+- lotto -
+----------------- */
+.rank-wrap{
+    background:
+    url('.././images/bg-frame-pattern.png') center top no-repeat,
+    url('.././images/bg-frame-pattern2.png') center bottom no-repeat,
+    linear-gradient( 90deg, rgb(151,26,26) 0%, rgb(18,0,28) 0%, rgb(10,1,49) 21%, rgb(2,2,69) 50%, rgb(6,1,42) 81%, rgb(10,0,15) 100%);
+    background-size: 100% auto;
+    border: solid 2px #784ca6;
+    margin: 0 auto 0;
+    min-height: 20rem;
+    position: relative;
+    margin: 0 0 100px 0;
+    padding: 5px;
+    position: relative;
+    @media (min-width:460px) {
+        margin: 0 0 160px 0;
+    }
+    @media (min-width:580px) {
+        margin: 0 0 200px 0;
+    }
+    @media (min-width: 800px){
+        // min-height: 450px;
+        // margin: 0 0 200px 0;
+        padding: 15px 10px 20px;
+    }
+}
+
+select.rank-select{
+    background: #2b0841 url(".././images/icon-arrow-down.png") right center no-repeat;
+    background-size: auto 98%;
+    border: solid 1px #ffc600;
+    border-radius: 5px;
+    box-shadow: 0 0 20px #070e1f inset, 0 0 20px #070e1f inset;
+    color: #fad57f;
+    display:block;
+    margin: 0 0 1rem 0;
+    padding: 8px 0.8rem 8px;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    // @media(min-width: 800px){
+    //     width:300px;
+    // }
+    // &:focus{ outline:none; }
+}
+
+.rank-wrap .rank-headline{
+    background: rgba(rgb(63, 18, 114), 0.3);
+    border: dashed 1px #736138;
+    color: #feffd9;
+    font-size: 0.95rem;
+    line-height: 180%;
+    margin: 0 auto 1rem;
+    padding: 0.5rem;
+    @media(min-width: 600px){ font-size: 0.8rem; }
+    @media(min-width: 1024px){ font-size: 1rem; }
+}
+
+.rank-wrap .rank-info{
+    color: #eaa136;
+    font-size: 15px;
+    margin: 0 auto 8px;
+    width: 100%;
+}
+
+ul.rank-data{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+        align-items: center;
+        background: rgba(#400c52, 0.8);
+        border: solid 1px #640a71;
+        border-radius: 4px;
+        color: #ffdd7e;
+        font-size: 18px;
+        display: flex;
+        height: 50px;
+        margin: 0 0 5px;
+        div{
+            text-align: center;
+            &:first-child{
+                align-items: center;
+                display: flex;
+                font-size: 22px;
+                height: 100%;
+                justify-content: center;
+                img{
+                    height: 100%;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
+ul.rank-data li{
+    &:first-child{
+        background: linear-gradient(0deg, #824301 0%, #ffc42a 73%, #fffca9 96%, #704c1e 100%);
+        color: #6e2c18;
+        font-weight: bold;
+        text-shadow: 0 1px 1px #bd9462;
+        height: 40px;
+        div{ font-size: 16px; }
+    }
+}
+
+// ADD ANIMATION
+ul.rank-data {
+    li.fadeIn{
+        $i_length: 100;
+        @for $i from 2 through 4 {
+            &:nth-child(#{$i}){
+                @keyframes moveIn
+                {
+                    from { transform: translateX(50%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                animation-name: moveIn;
+                animation-duration: $i * .2s;
+                animation-fill-mode: forwards;
+            }
+        }
+        @for $i from 5 through $i_length {
+            &:nth-child(#{$i}){
+                animation: fadeIn .5s .8s ease-out forwards;
+                opacity: 0;
+                @keyframes fadeIn { from{opacity: 0;} to{opacity: 1;} }
+            }
+        }
+    }
+}
+
+$border-color: (
+  no1: #c1c100,
+  no2: #9a9a9a,
+  no3: #bd8800
+);
+
+@each $number, $colors in $border-color{
+  ul.rank-data li.#{$number} {
+    background: linear-gradient(90deg, #23002f 10%, #581d6b, #1a0023);
+    border: solid 1px $colors;
+    color: #ffeb5c;
+    margin: 0 0 8px;
+  }
+}
+
+ul.rank-data li div{
+    &:first-child { width: 16%; }
+    &:nth-child(2), &:nth-child(3){ width: 42%; }
+}
+
+.data-empty{
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 3% 0;
+    text-align: center;
+}
+
+
+
+

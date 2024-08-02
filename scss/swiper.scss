@@ -1,0 +1,38 @@
+
+.swiper {
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    .swiper-wrapper {
+        width: 90%;
+    }
+    .swiper-slide {
+        // background: #202020;
+        img {
+            $padding: 5px;
+            // border: #{$padding} solid #fff;
+            border-radius: calc(#{$padding} * 2);
+            max-width: calc(100% - (#{$padding} * 2));
+            max-height: 100%;
+        }
+    }
+    .swiper-button-next, .swiper-button-prev {
+        background: rgba(30, 51, 118, 0.7);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        height: 45px;
+        width: 45px;
+        &::after {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+}
