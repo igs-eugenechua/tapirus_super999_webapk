@@ -1625,6 +1625,9 @@ section {
 .download-wrap .download-btn .download {
   width: 60%;
 }
+.download-wrap .download-btn .download a {
+  cursor: pointer;
+}
 .download-wrap .download-btn .download img {
   height: auto;
   width: 100%;

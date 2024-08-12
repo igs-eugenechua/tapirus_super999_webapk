@@ -240,6 +240,9 @@ $ui-hover: #313131;
     }
     .download {
       width: 60%;
+      a {
+        cursor: pointer;
+      }
       img {
         height: auto;
         width: 100%;

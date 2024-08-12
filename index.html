@@ -57,8 +57,8 @@
           </a>
         </div>
         <div class="main-download">
-          <a href="">
-            <img :src="`./images/footer_download_btn_${$i18n.locale}.png`" alt="">
+          <a>
+            <img :src="`./images/footer_download_btn_${$i18n.locale}.png`" alt="" @click="downloadAPK()">
           </a>
         </div>
         <div>
@@ -92,7 +92,7 @@
           <img :src='`./images/overdownload_${$i18n.locale}.png`' />
         </div>
         <div class="download">
-          <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
+          <a @click="downloadAPK()">
             <img :src='`./images/button-Download_${$i18n.locale}.png`' />
           </a>
         </div>
@@ -286,6 +286,10 @@
             offset: offset,
             easing: 'ease-in',
           });
+        },
+        downloadAPK() {
+          const url = "http://dl.super9999.com/APK_Download/JinJinJinCasino.apk"
+          window.location.href = url
         },
         // render
         renderLang(lang) {
