@@ -12,6 +12,7 @@
   <script src="js/crypto.min.js"></script>
   <script src="js/sha.js"></script>
   <script src="js/axios.min.js"></script>
+  <script src="js/vue-scrollto.js"></script>
 
   <link
     rel="stylesheet"
@@ -22,113 +23,120 @@
 </head>
 
 <body>
-  <div id="app" class="wrap">
-    <section class="footer-wrap">
-      <div class="download-info">
-        <div class="icon">
-          <img src="./images/panther-icon.png" alt>
-        </div>
-        <div class="name">JinJinJin</div>
-        <a class="download-btn" href="">
-          <div>DOWNLOAD</div>
-        </a>
+  <div id="app" class="wrap isNotAppInit">
+
+    <section class="header-wrap">
+      <div class="logo">
+        <img src="./images/login-logo.png" alt>
       </div>
-    </section>
-    <section class="lang-container">
-      <div class="lang-selector">
-        <ul class="lang-list">
+      <div class="lang-wrap">
+        <div class="lang-btn" @click="clickLangSelector()">
+          <span>{{ renderLang(currentLanguage) }}</span>
+          <span class="img">
+            <img src="./images/icon-arrow-down.png" alt="">
+          </span>
+        </div>
+        <ul class="lang-list" :class="{'disabled': langSelector === false}">
           <li v-for="(list, index) in langList" :key="index" @click="changeLanguage(list.params)" :class="{active: list.params === currentLanguage}">
             {{ list.lang }}
           </li>
         </ul>
       </div>
     </section>
-    <!-- <section class="cash-block">
-      <div class="app-info">
-        <div class="icon">
-          <img src="./images/panther-icon.png" alt>
+
+    <section class="footer-wrap">
+      <div class="menu-wrap">
+        <div>
+          <a href="https://business.facebook.com/JinJinJinCasino" target="_blank">
+            <img :src="`./images/footer_menu_btn_01_${$i18n.locale}.png`" alt />
+          </a>
         </div>
-        <div class="title-txt">
-          <div class="app-name">JinJinJin</div>
-          <a href="" class="company-name">ARC PLAY LTD CO</a>
+        <div>
+          <a :href="`https://my.super9999.com/customer/contactus?type=byEmail&lang=${$i18n.locale}`" target="_blank">
+            <img :src="`./images/footer_menu_btn_02_${$i18n.locale}.png`" alt="">
+          </a>
         </div>
-      </div>
-    </section> -->
-    <section class="cash-block">
-      <div class="app-info logo">
-        <a href="" class="icon">
-          <img src="./images/login-logo.png" alt>
-        </a>
-        <div class="title-txt">
-          <a href="" class="company-name">ARC PLAY LTD CO.</a>
+        <div class="main-download">
+          <a href="">
+            <img :src="`./images/footer_download_btn_${$i18n.locale}.png`" alt="">
+          </a>
         </div>
-      </div>
-    </section>
-    <section class="social-wrap">
-      <div class="social">
-        <a href="https://apps.apple.com/my/app/jinjinjincasino/id1457540360" target="_blank">
-          <img src="./images/button-appstore.png" alt>
-        </a>
-        <a href="https://my.super9999.com/customer/contactus?type=byEmail" target="_blank">
-          <img :src='`./images/button-support__${$i18n.locale}.png`' />
-        </a>
-        <a href="https://business.facebook.com/JinJinJinCasino" target="_blank">
-          <img src="./images/button-fb.png" alt>
-        </a>
-    </section>
-    <section class="cash-block">
-      <div class="cash-btn">
-        <div class="apk">
-          <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
-            <img :src='`./images/button-Download__${$i18n.locale}.png`' />
+        <div>
+          <a @click="scrollToElement('#tutorial', -80)">
+            <img :src="`./images/footer_menu_btn_03_${$i18n.locale}.png`" alt="">
+          </a>
+        </div>
+        <div>
+          <a @click="scrollToElement('#channles', -80)">
+            <img :src="`./images/footer_menu_btn_04_${$i18n.locale}.png`" alt="">
           </a>
         </div>
       </div>
     </section>
+
     <section class="swiper-wrap">
-      <div class="swiper-txt">{{ $t('howToDownload') }}</div>
       <div class="swiper">
         <div class="swiper-wrapper">
-          <div v-for="(pic, i) in 5" class="swiper-slide">
-            <img :src="`images/tutorial-${$i18n.locale}-P${i + 1}.jpg`" alt="">
+          <div v-for="(pic, i) in 6" class="swiper-slide">
+            <img :src="`images/banner_0${i + 1}-${$i18n.locale}.jpg`" alt="">
           </div>
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
       </div>
     </section>
-    <section class="rank-wrap">
-      <select v-if="rankData.length>0" v-model="currentId" @change="rankChange" class="rank-select">
-        <option v-for="(data, index) in rankData" :key="index" :value="data.rank_id">{{ data.ranking_name }}</option>
-      </select>
-      <div v-show="data.rank_id === currentId" v-for="(data, index) in computedRankInfo" :key="index">
-        <div class="rank-headline">
-          <div class="time">{{ $t('rank.time') }}：{{ data.start_time }} ~ {{ data.end_time }}</div>
-          <div class="room">{{ $t('rank.gameHall') }}：
-            <span> {{ data.games.join('、') }} </span>
-          </div>
+
+    <section class="download-wrap">
+      <div class="download-btn">
+        <div class="award">
+          <img :src='`./images/overdownload_${$i18n.locale}.png`' />
         </div>
+        <div class="download">
+          <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
+            <img :src='`./images/button-Download_${$i18n.locale}.png`' />
+          </a>
+        </div>
+        <div class="award">
+          <img :src='`./images/rankone_${$i18n.locale}.png`' />
+        </div>
+      </div>
+    </section>
 
-        <div v-if="rankList.length > 0" class="rank-info">{{ $t('rank.leaderboard') }} 5{{ $t('rank.updateOnceEveryMinuteUseCtrlFToSearchForPlayerNickname') }}</div>
-
-        <div v-if="rankList.length <= 0" class="data-empty">- {{ $t('noData') }} -</div>
-        <ul v-else class="rank-data">
-          <li>
-            <div>{{ $t('rank.ranking') }}</div>
-            <div>{{ $t('rank.playerNickname') }}</div>
-            <div>{{ $t('rank.activityScore') }}</div>
-          </li>
-          <li :class="{'fadeIn':fadeIn,'no1':index == 0,'no2':index == 1,'no3':index == 2}" v-for="(list ,index) in computedRankList" :key="index">
-            <div v-if="index == 0 || index == 1 || index == 2">
-              <img :src="`./images/icon-medal0${index + 1}.png`" alt="">
+    <section id="tutorial" class="tutorial-wrap">
+      <div class="tutorial-ul">
+        <ul>
+          <li class="title">
+            <div class="img">
+              <img src="./images/gem.png" alt="">
             </div>
-            <div v-else>{{ list.rank }}</div>
-            <div>{{ list.nickname }}</div>
-            <div>{{ list.score }}</div>
+            <span>{{ $t('howToDownload') }}</span>
+          </li>
+          <li class="text">{{ $t('tutorial.step1') }}</li>
+          <li class="pic">
+            <img :src="`./images/tutorial-${$i18n.locale}-P1.jpg`" alt="">
+          </li>
+          <li class="text">{{ $t('tutorial.step2') }}</li>
+          <li class="pic">
+            <img :src="`./images/tutorial-${$i18n.locale}-P2.jpg`" alt="">
+          </li>
+          <li class="text">{{ $t('tutorial.step3') }}</li>
+          <li class="pic">
+            <img :src="`./images/tutorial-${$i18n.locale}-P3.jpg`" alt="">
+          </li>
+          <li class="text">{{ $t('tutorial.step4') }}</li>
+          <li class="pic">
+            <img :src="`./images/tutorial-${$i18n.locale}-P4.jpg`" alt="">
           </li>
         </ul>
       </div>
-      <div v-if="rankData.length <= 0" class="data-empty">- {{ $t('noData') }} -</div>
+    </section>
+
+    <section id="channles" class="channels-wrap">
+      <ul>
+        <li v-for="(pic, i) in 19">
+          <img :src="`./images/channle_${i}.png`" alt="">
+        </li>
+      </ul>
     </section>
   </div>
 
@@ -160,7 +168,8 @@
           rankList: [],
           currentId: '',
           fadeIn: false,
-          swiper: null
+          swiper: null,
+          langSelector: false,
         }
       },
       computed: {
@@ -188,8 +197,11 @@
           this.getRankInfo()
         }
       },
+      created() {
+        document.getElementById('app').classList.remove('isNotAppInit') // remove loading
+      },
       mounted() {
-        this.getRankInfo()
+        // this.getRankInfo()
         this.initSwiper()
       },
       methods: {
@@ -263,11 +275,27 @@
         },
         changeLanguage(lang) {
           this.$i18n.locale = lang
+          this.langSelector = false
+        },
+        clickLangSelector() {
+          this.langSelector = !this.langSelector
+        },
+        scrollToElement(sectionId, offset = -50) {
+          this.$scrollTo(sectionId, {
+            duration: 500,
+            offset: offset,
+            easing: 'ease-in',
+          });
+        },
+        // render
+        renderLang(lang) {
+          return lang === 'zh_Hans' ? '简中' : 'English'
         }
       }
     });
 
     app.use(i18n);
+    app.use(VueScrollTo);
     app.mount('#app');
   </script>
 </body>
