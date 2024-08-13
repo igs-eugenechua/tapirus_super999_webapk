@@ -1484,6 +1484,7 @@ section {
   width: 75px;
 }
 .header-wrap .lang-wrap .lang-btn span {
+  font-weight: bold;
   text-align: left;
 }
 .header-wrap .lang-wrap .lang-btn span.img {
@@ -1641,11 +1642,10 @@ section {
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding: 0 15px;
-  margin: 50px 0;
   width: 100%;
 }
 .tutorial-wrap .tutorial-ul {
+  background: linear-gradient(to bottom, transparent 0%, rgba(169, 157, 111, 0.7) 3%, rgba(169, 157, 111, 0.7) 97%, transparent 100%);
   width: 100%;
 }
 .tutorial-wrap .tutorial-ul ul {
@@ -1682,18 +1682,20 @@ section {
   width: 100%;
 }
 .tutorial-wrap .tutorial-ul ul li.title span {
-  text-shadow: 0 0 5px #fafba4;
+  text-shadow: 0 0 5px #000;
 }
 .tutorial-wrap .tutorial-ul ul li.text {
   font-size: 1.5rem;
   font-weight: bolder;
   text-align: left;
+  text-shadow: 0 0 3px #000;
+  padding: 0 0 10px 15px;
 }
 .tutorial-wrap .tutorial-ul ul li.pic {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 .tutorial-wrap .tutorial-ul ul li.pic img {
   height: auto;

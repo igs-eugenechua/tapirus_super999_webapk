@@ -93,6 +93,7 @@ $ui-hover: #313131;
       height: 25px;
       width: 75px;
       span {
+        font-weight: bold;
         text-align: left;
       }
       span.img {
@@ -261,10 +262,9 @@ $ui-hover: #313131;
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
-  padding: 0 15px;
-  margin: 50px 0;
   width: 100%;
   .tutorial-ul {
+    background: linear-gradient(to bottom, transparent 0%, rgba(169, 157, 111, 0.7) 3%, rgba(169, 157, 111, 0.7) 97%, transparent 100%);
     width: 100%;
     ul {
       list-style: none;
@@ -297,19 +297,21 @@ $ui-hover: #313131;
             }
           }
           span {
-            text-shadow: 0 0 5px #fafba4;
+            text-shadow: 0 0 5px #000;
           }
         }
         &.text {
           font-size: 1.5rem;
           font-weight: bolder;
           text-align: left;
+          text-shadow: 0 0 3px #000;
+          padding: 0 0 10px 15px;
         }
         &.pic {
           align-items: center;
           display: flex;
           justify-content: center;
-          margin-bottom: 15px;
+          margin-bottom: 25px;
           img {
             height: auto;
             width: calc(100% - 30px);
