@@ -47,3 +47,22 @@
         }
     }
 }
+
+.swiper-wrap {
+    .swiper-loading {
+        align-items: center;
+        display: flex;
+        height: 300px;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+        .loading-icon {
+            background:url("/images/icon-loading.svg") center top no-repeat !important;
+            background-size: 100%;
+            position: absolute;
+            opacity: 0.7;
+            width: 50px;
+            height: 75px;
+        }
+    }
+}

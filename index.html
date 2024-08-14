@@ -75,7 +75,10 @@
     </section>
 
     <section class="swiper-wrap">
-      <div class="swiper">
+      <div v-if="bannerCount === 0" class="swiper-loading">
+        <div class="loading-icon"></div>
+      </div>
+      <div v-else class="swiper">
         <div class="swiper-wrapper">
           <div v-for="(pic, i) in bannerCount" class="swiper-slide">
             <img :src="`images/banner_0${i + 1}-${$i18n.locale}.jpg`" alt="">
