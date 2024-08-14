@@ -192,8 +192,10 @@ $ui-hover: #313131;
         justify-content: center;
         width: 100%;
         img {
-          height: 90%;
-          width: auto;
+          // height: 90%;
+          // width: auto;
+          height: auto;
+          width: 100%;
         }
       }
       &:hover, &.active, &:active {
@@ -226,6 +228,7 @@ $ui-hover: #313131;
 }
 
 .download-wrap {
+  margin: 8% 0;
   .download-btn {
     align-items: center;
     display: flex;

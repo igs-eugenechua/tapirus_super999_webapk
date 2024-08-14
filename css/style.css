@@ -1584,8 +1584,8 @@ section {
   width: 100%;
 }
 .footer-wrap .menu-wrap div a img {
-  height: 90%;
-  width: auto;
+  height: auto;
+  width: 100%;
 }
 .footer-wrap .menu-wrap div:hover a img, .footer-wrap .menu-wrap div.active a img, .footer-wrap .menu-wrap div:active a img {
   filter: brightness(1.2);
@@ -1609,6 +1609,9 @@ section {
   filter: brightness(1.2);
 }
 
+.download-wrap {
+  margin: 8% 0;
+}
 .download-wrap .download-btn {
   align-items: center;
   display: flex;

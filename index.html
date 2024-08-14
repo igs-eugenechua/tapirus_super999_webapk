@@ -77,7 +77,7 @@
     <section class="swiper-wrap">
       <div class="swiper">
         <div class="swiper-wrapper">
-          <div v-for="(pic, i) in 6" class="swiper-slide">
+          <div v-for="(pic, i) in bannerCount" class="swiper-slide">
             <img :src="`images/banner_0${i + 1}-${$i18n.locale}.jpg`" alt="">
           </div>
         </div>
@@ -168,6 +168,7 @@
           rankList: [],
           currentId: '',
           fadeIn: false,
+          bannerCount: 0,
           swiper: null,
           langSelector: false,
         }
@@ -194,14 +195,15 @@
       },
       watch: {
         currentLanguage() {
-          this.getRankInfo()
+          // this.getRankInfo()
         }
       },
       created() {
         document.getElementById('app').classList.remove('isNotAppInit') // remove loading
       },
-      mounted() {
-        // this.getRankInfo()
+      async mounted() {
+        await this.checkUrlLang()
+        await this.calculateBannerCount()
         this.initSwiper()
       },
       methods: {
@@ -257,7 +259,7 @@
         arkClient,
         initSwiper() {
           this.swiper = new Swiper('.swiper', {
-            speed: 400,
+            speed: 800,
             spaceBetween: 30,
             slidesPerView: 'auto',
             direction: 'horizontal',
@@ -267,7 +269,35 @@
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
             },
+            loop: true,
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false,
+            },
           })
+        },
+        checkImageExists(src) {
+          const img = new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = src;
+          });
+                    
+          return img
+        },
+        async calculateBannerCount() {
+          const locale = this.$i18n.locale;
+          let count = 0;
+          while (true) {
+            const exists = await this.checkImageExists(`images/banner_0${count + 1}-${locale}.jpg`);
+            if (exists) {
+              count++;
+            } else {
+              break;
+            }
+          }
+          this.bannerCount = count;
         },
         async rankChange() {
           this.getRankList()
@@ -276,6 +306,14 @@
         changeLanguage(lang) {
           this.$i18n.locale = lang
           this.langSelector = false
+        },
+        checkUrlLang() {
+          const urlParams = new URLSearchParams(window.location.search)
+          let lang = urlParams.get('lang') || 'en';
+          if (lang === 'zh') {
+            lang = 'zh_Hans'
+          }
+          this.changeLanguage(lang)
         },
         clickLangSelector() {
           this.langSelector = !this.langSelector
