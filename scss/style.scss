@@ -195,7 +195,9 @@ $ui-hover: #313131;
           // height: 90%;
           // width: auto;
           height: auto;
-          width: 100%;
+          max-height: 85px;
+          max-width: 90px;
+          width: 90%;
         }
       }
       &:hover, &.active, &:active {
@@ -215,6 +217,8 @@ $ui-hover: #313131;
         justify-content: center;
         img {
           height: auto;
+          max-height: unset;
+          max-width: unset;
           width: 100%;
         }
       }
