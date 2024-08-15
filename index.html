@@ -288,11 +288,15 @@
           this.langSelector = false
         },
         checkUrlLang() {
-          const urlParams = new URLSearchParams(window.location.search)
-          let lang = urlParams.get('lang') || 'en';
-          if (lang === 'zh') {
-            lang = 'zh_Hans'
-          }
+          let userLanguage = navigator.language || navigator.userLanguage;
+          let lang
+
+          // 判斷是否是中文瀏覽器
+          if (userLanguage === 'zh-CN' || userLanguage === 'zh-SG' || userLanguage.startsWith('zh')) {
+            lang = 'zh_Hans';
+          } else {
+            lang = 'en';
+          }          
           this.changeLanguage(lang)
         },
         clickLangSelector() {
