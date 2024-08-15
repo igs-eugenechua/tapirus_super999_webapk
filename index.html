@@ -206,7 +206,7 @@
       },
       async mounted() {
         await this.checkUrlLang()
-        await this.calculateBannerCount()
+        this.calculateBannerCount()
         this.initSwiper()
       },
       methods: {
