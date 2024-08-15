@@ -1667,7 +1667,7 @@ section {
   height: auto;
   width: 100%;
 }
-@media (min-width: 411px) {
+@media (min-width: 340px) {
   .download-wrap .award-content {
     flex-wrap: nowrap;
   }
