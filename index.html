@@ -91,13 +91,15 @@
 
     <section class="download-wrap">
       <div class="download-btn">
-        <div class="award">
-          <img :src='`./images/overdownload_${$i18n.locale}.png`' />
-        </div>
         <div class="download">
           <a href="http://dl.super9999.com/APK_Download/JinJinJinCasino.apk">
             <img :src='`./images/button-Download_${$i18n.locale}.png`' />
           </a>
+        </div>
+      </div>
+      <div class="award-content">
+        <div class="award">
+          <img :src='`./images/overdownload_${$i18n.locale}.png`' />
         </div>
         <div class="award">
           <img :src='`./images/rankone_${$i18n.locale}.png`' />
@@ -171,10 +173,8 @@
           rankList: [],
           currentId: '',
           fadeIn: false,
-          bannerCount: 0,
           swiper: null,
           langSelector: false,
-          isLoadingBanner: true,
         }
       },
       computed: {

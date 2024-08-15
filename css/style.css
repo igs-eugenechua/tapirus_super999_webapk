@@ -1639,15 +1639,8 @@ section {
   margin: auto;
   width: 100%;
 }
-.download-wrap .download-btn .award {
-  width: 20%;
-}
-.download-wrap .download-btn .award img {
-  height: auto;
-  width: 100%;
-}
 .download-wrap .download-btn .download {
-  width: 60%;
+  width: 90%;
 }
 .download-wrap .download-btn .download a {
   cursor: pointer;
@@ -1658,6 +1651,29 @@ section {
 }
 .download-wrap .download-btn .download:hover img {
   filter: brightness(1.2);
+}
+.download-wrap .award-content {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 10px auto auto auto;
+  width: 100%;
+}
+.download-wrap .award-content .award {
+  width: 90%;
+}
+.download-wrap .award-content .award img {
+  height: auto;
+  width: 100%;
+}
+@media (min-width: 411px) {
+  .download-wrap .award-content {
+    flex-wrap: nowrap;
+  }
+  .download-wrap .award-content .award {
+    width: 48%;
+  }
 }
 
 .tutorial-wrap {

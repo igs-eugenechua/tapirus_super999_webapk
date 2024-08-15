@@ -239,15 +239,8 @@ $ui-hover: #313131;
     justify-content: center;
     margin: auto;
     width: 100%;
-    .award {
-      width: 20%;
-      img {
-        height: auto;
-        width: 100%;
-      }
-    }
     .download {
-      width: 60%;
+      width: 90%;
       a {
         cursor: pointer;
       }
@@ -259,6 +252,27 @@ $ui-hover: #313131;
         img {
           filter: brightness(1.2);
         }
+      }
+    }
+  }
+  .award-content {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10px auto auto auto;
+    width: 100%;
+    .award {
+      width: 90%;
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+    @media (min-width: 411px) {
+      flex-wrap: nowrap;
+      .award {
+        width: 48%;
       }
     }
   }
