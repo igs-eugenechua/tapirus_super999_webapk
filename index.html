@@ -75,12 +75,12 @@
     </section>
 
     <section class="swiper-wrap">
-      <div v-if="bannerCount === 0" class="swiper-loading">
+      <div v-if="isLoadingBanner" class="swiper-loading">
         <img src="images/icon-loading.svg" class="loading-icon"/>
       </div>
       <div v-else class="swiper">
         <div class="swiper-wrapper">
-          <div v-for="(pic, i) in bannerCount" class="swiper-slide">
+          <div v-for="(pic, i) in 6" class="swiper-slide">
             <img :src="`images/banner_0${i + 1}-${$i18n.locale}.jpg`" alt="">
           </div>
         </div>
@@ -174,6 +174,7 @@
           bannerCount: 0,
           swiper: null,
           langSelector: false,
+          isLoadingBanner: true,
         }
       },
       computed: {
@@ -206,7 +207,8 @@
       },
       async mounted() {
         await this.checkUrlLang()
-        this.calculateBannerCount()
+        await this.loadBannerImages()
+        // this.calculateBannerCount()
         this.initSwiper()
       },
       methods: {
@@ -301,6 +303,38 @@
             }
           }
           this.bannerCount = count;
+        },
+        loadBannerImages() {
+          const totalImages = 6;
+          const loadedImages = [];
+          let loadedCount = 0;
+
+          for (let i = 1; i <= totalImages; i++) {
+            const img = new Image();
+            img.src = `images/banner_0${i}-${this.$i18n.locale}.jpg`;
+
+            img.onload = () => {
+              loadedCount++;
+              loadedImages.push(img.src);
+
+              // 当所有图片都加载完毕时，更新 bannerImages 并切换显示状态
+              if (loadedCount === totalImages) {
+                this.bannerImages = loadedImages;
+                this.isLoadingBanner = false;
+              }
+            };
+
+            img.onerror = () => {
+              // 处理加载错误，可以在此添加默认图片或重试逻辑
+              console.error(`Failed to load image: ${img.src}`);
+              loadedCount++;
+
+              if (loadedCount === totalImages) {
+                this.bannerImages = loadedImages;
+                this.isLoadingBanner = false;
+              }
+            };
+          }
         },
         async rankChange() {
           this.getRankList()
